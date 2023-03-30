@@ -15,7 +15,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<Favicon url="%PUBLIC_URL%/icons/favicon.ico" />
+			<Favicon url="./icons/favicon.ico" />
 			<div className="max-w-8xl mx-auto text-primary">
 				{windowSize.isDesktop && <Menu />}
 				<Header />
