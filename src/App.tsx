@@ -14,7 +14,7 @@ function App() {
 	useProducts()
 
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename="/sultan-shop">
 			<Favicon url="./icons/favicon.ico" />
 			<div className="max-w-8xl mx-auto text-primary">
 				{windowSize.isDesktop && <Menu />}

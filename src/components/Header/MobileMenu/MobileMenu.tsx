@@ -13,7 +13,7 @@ const MobileMenu: FC<{ menuIsOpen: boolean }> = ({ menuIsOpen }) => {
 			<HeaderHorizontalDivider />
 
 			<div className="flex items-center justify-between bg-white relative z-10">
-				<Link to="/sultan-shop/catalog" className="w-1/2">
+				<Link to="/catalog" className="w-1/2">
 					<Button
 						text="Каталог"
 						icon="MdOutlineGridView"

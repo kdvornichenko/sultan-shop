@@ -33,7 +33,7 @@ const Header = () => {
 
 				{windowSize.isDesktop && (
 					<div className="flex flex-1 items-center justify-between gap-1">
-						<Link to="/sultan-shop/catalog">
+						<Link to="/catalog">
 							<CatalogButton />
 						</Link>
 						<Input
