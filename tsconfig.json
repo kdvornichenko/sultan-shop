@@ -21,11 +21,12 @@
 			"@/ui/*": ["components/ui/*"],
 			"@/screens/*": ["components/screens/*"],
 
+			"@/data/*": ["data/*"],
 			"@/assets/*": ["assets/*"],
 			"@/config/*": ["config/*"],
 			"@/hooks/*": ["hooks/*"],
 			"@/services/*": ["services/*"],
-			"@/shared/*": ["shared/*"],
+			"@/types/*": ["types/*"],
 			"@/store/*": ["store/*"],
 			"@/utils/*": ["utils/*"]
 		}
