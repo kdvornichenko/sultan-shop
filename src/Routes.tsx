@@ -9,7 +9,7 @@ import ProductPage from './pages/ProductPage'
 export default () => (
 	<SkeletonTheme baseColor="#EDEDED" highlightColor="#DADADA">
 		<Routes>
-			<Route path="/" element={<Navigate to="/catalog" />} />
+			<Route path="/" element={<Catalog />} />
 			<Route path="/catalog" element={<Catalog />} />
 			<Route path="/control-panel" element={<ControlPanel />} />
 			<Route path="/catalog/:productId" element={<ProductPage />} />
