@@ -49,7 +49,7 @@ const ProductCard: FC<{ product?: IProduct }> = ({ product }) => {
 						volume={product?.volume}
 					/>
 				</div>
-				<Link to={`/catalog/${product?.barcode}`}>
+				<Link to={`/sultan-shop/catalog/${product?.barcode}`}>
 					<h4
 						className="mt-2.5 font-medium line-clamp-3 h-[72px]"
 						onClick={handleProductClick}

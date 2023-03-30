@@ -16,7 +16,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 	const initialFormData: IProduct = {
 		title: '',
 		img: {
-			imgUrl: '',
+			imgUrl: `/sultan-shop/img/products/${product?.barcode}`,
 			isLocal: true,
 		},
 		label: '',
@@ -126,7 +126,15 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 			) {
 				const updatedData = productsData.map((product: IProduct) => {
 					if (product.barcode === formData.barcode) {
-						return formData
+						return {
+							...formData,
+							img: {
+								imgUrl: formData.img.isLocal
+									? `/sultan-shop/img/products/${formData.barcode}`
+									: formData.img.imgUrl,
+								isLocal: formData.img.isLocal,
+							},
+						}
 					} else {
 						return product
 					}
@@ -143,7 +151,18 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 		} else {
 			localStorage.setItem(
 				'productsData',
-				JSON.stringify([...productsData, formData])
+				JSON.stringify([
+					...productsData,
+					{
+						...formData,
+						img: {
+							imgUrl: formData.img.isLocal
+								? `/sultan-shop/img/products/${formData.barcode}`
+								: formData.img.imgUrl,
+							isLocal: formData.img.isLocal,
+						},
+					},
+				])
 			)
 			setMessage(`Товар со штрихкодом ${formData.barcode} добавлен`)
 		}

@@ -1,5 +1,4 @@
 import { ICartProduct } from 'models'
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { selectProductsInCart } from '@/store/reducers/productsReducer'
