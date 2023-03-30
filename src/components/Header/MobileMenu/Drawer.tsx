@@ -32,6 +32,7 @@ const Drawer: FC<{ menuIsOpen: boolean }> = ({ menuIsOpen }) => {
 						icon="MdFileDownload"
 						iconSize="1rem"
 						className="btn-header w-full"
+						variant=""
 					/>
 				</div>
 			</div>
