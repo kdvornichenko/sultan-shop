@@ -10,7 +10,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build",
+		"build": "tsc && vite build --base=/sultan-shop/",
 		"preview": "vite preview"
 	},
 	"dependencies": {
