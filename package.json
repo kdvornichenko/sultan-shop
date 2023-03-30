@@ -3,8 +3,9 @@
 	"author": {
 		"email": "gglade999@gmail.com",
 		"name": "Kirill Dvornichenko",
-		"url": "https://kdvornichenko.github.io/sultan-shop/"
+		"url": "https://github.com/kdvornichenko/"
 	},
+	"homepage": "https://kdvornichenko.github.io/sultan-shop/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
