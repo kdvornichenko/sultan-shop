@@ -40,7 +40,7 @@ const ProductPage: FC = ({}) => {
 		if (barcode) {
 			setCurrentProduct(products.find((item) => item.barcode === barcode))
 		} else {
-			setBarcodeInUrl(window.location.pathname.split('/').at(-1) ?? '')
+			setBarcodeInUrl(window.location.hash.split('/').at(-1) ?? '')
 		}
 	}, [barcode, products])
 
