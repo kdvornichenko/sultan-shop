@@ -41,7 +41,7 @@ const CartBlock = () => {
 	}, [cartData])
 
 	return (
-		<Link to={'/cart'}>
+		<Link to={'/sultan-shop/cart'}>
 			<div className="flex items-center gap-6 group cursor-pointer md:ml-4">
 				<div
 					data-cartproductscount={cartProductsCount}

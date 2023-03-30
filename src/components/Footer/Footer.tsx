@@ -19,7 +19,7 @@ const Footer = () => {
 				<div className="w-full sm:max-w-xs">
 					<div className="flex items-center gap-8">
 						<div className="w-1/3 sm:w-auto">
-							<Link to="#">
+							<Link to="/sultan-shop/">
 								<SvgLogoFooter color="#fff" />
 							</Link>
 						</div>
