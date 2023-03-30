@@ -8,7 +8,7 @@ const SvgLogo: FC<{ color: string }> = ({ color }) => {
 
 	return (
 		<Link
-			to="/sultan-shop/"
+			to="/"
 			className="group w-24 h-12 block mx-auto md:mx-0 md:w-12 md:h-full lg:w-40"
 		>
 			<svg
