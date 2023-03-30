@@ -1,5 +1,5 @@
 import Favicon from 'react-favicon'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 
 import Routes from './Routes'
 import Footer from './components/Footer/Footer'
@@ -14,7 +14,7 @@ function App() {
 	useProducts()
 
 	return (
-		<BrowserRouter basename="/sultan-shop">
+		<HashRouter basename="/">
 			<Favicon url="./icons/favicon.ico" />
 			<div className="max-w-8xl mx-auto text-primary">
 				{windowSize.isDesktop && <Menu />}
@@ -25,7 +25,7 @@ function App() {
 				</div>
 				<Footer />
 			</div>
-		</BrowserRouter>
+		</HashRouter>
 	)
 }
 
