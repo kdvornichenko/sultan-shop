@@ -25,17 +25,26 @@ const useCompareAndFilterProducts = () => {
 		if (
 			productsByPrice.length > 0 &&
 			productsByManufacturer.length > 0
+			// productsByType.length > 0
 		) {
 			for (const product of productsByPrice) {
 				if (
 					productsByManufacturer.find((p) => p.barcode === product.barcode)
+					// productsByType.find((p) => p.barcode === product.barcode)
 				) {
 					filteredProducts.push(product)
 				}
 			}
+		} else if (productsByPrice.length > 0) {
+			filteredProducts = productsByPrice
+		} else if (productsByManufacturer.length > 0) {
+			filteredProducts = productsByManufacturer
+		} else if (productsByType.length > 0) {
+			filteredProducts = productsByType
 		} else {
 			filteredProducts = products
 		}
+		console.log(productsByPrice)
 
 		dispatch(setFilteredProducts(filteredProducts))
 	}, [products, productsByPrice, productsByManufacturer, productsByType])

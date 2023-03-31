@@ -1,8 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { selectProductsData } from '@/store/reducers/productsReducer'
-import { setFilteredByPriceProducts } from '@/store/slices/productsSlice'
+import {
+	selectFilteredProducts,
+	selectProductsData,
+} from '@/store/reducers/productsReducer'
+import {
+	setFilteredByPriceProducts,
+	setFilteredProducts,
+} from '@/store/slices/productsSlice'
 
 const PriceRange = () => {
 	const dispatch = useDispatch()
