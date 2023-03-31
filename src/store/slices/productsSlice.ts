@@ -6,8 +6,13 @@ interface IProductsState {
 	loading: boolean
 	filteredData: IProduct[]
 	manufacturerFilter: string[]
+	currentProductTitle: string | undefined
 	currentProductBarcode: string | undefined
 	productsInCart: ICartProduct[]
+	cartProductsAmount: number
+	filteredByPriceData: IProduct[]
+	filteredByManufacturerData: IProduct[]
+	filteredByTypeData: IProduct[]
 }
 
 const initialState: IProductsState = {
@@ -15,8 +20,13 @@ const initialState: IProductsState = {
 	loading: true,
 	filteredData: [],
 	manufacturerFilter: [],
+	currentProductTitle: '',
 	currentProductBarcode: '',
 	productsInCart: [],
+	cartProductsAmount: 0,
+	filteredByPriceData: [],
+	filteredByManufacturerData: [],
+	filteredByTypeData: [],
 }
 
 export const productsSlice = createSlice({
@@ -33,6 +43,18 @@ export const productsSlice = createSlice({
 		setFilteredProducts: (state, action: PayloadAction<IProduct[]>) => {
 			state.filteredData = action.payload
 		},
+		setFilteredByPriceProducts: (state, action: PayloadAction<IProduct[]>) => {
+			state.filteredByPriceData = action.payload
+		},
+		setFilteredByManufacturerProducts: (
+			state,
+			action: PayloadAction<IProduct[]>
+		) => {
+			state.filteredByManufacturerData = action.payload
+		},
+		setFilteredByTypeProducts: (state, action: PayloadAction<IProduct[]>) => {
+			state.filteredByTypeData = action.payload
+		},
 		clearFilteredProducts: (state) => {
 			state.filteredData = state.data
 		},
@@ -43,6 +65,12 @@ export const productsSlice = createSlice({
 			} else {
 				state.manufacturerFilter.splice(index, 1)
 			}
+		},
+		setCurrentProductTitle: (
+			state,
+			action: PayloadAction<string | undefined>
+		) => {
+			state.currentProductTitle = action.payload
 		},
 		setCurrentProductBarcode: (
 			state,
@@ -58,6 +86,9 @@ export const productsSlice = createSlice({
 		setProductsInCart: (state, action: PayloadAction<ICartProduct[]>) => {
 			state.productsInCart = action.payload
 		},
+		setCartProductsAmount: (state, action: PayloadAction<number>) => {
+			state.cartProductsAmount = action.payload
+		},
 	},
 })
 
@@ -70,4 +101,9 @@ export const {
 	setCurrentProductBarcode,
 	deleteCurrentProduct,
 	setProductsInCart,
+	setCartProductsAmount,
+	setCurrentProductTitle,
+	setFilteredByPriceProducts,
+	setFilteredByManufacturerProducts,
+	setFilteredByTypeProducts,
 } = productsSlice.actions

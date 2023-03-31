@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC } from 'react'
 
 import Contacts from './Contacts'
 import Overlay from './Overlay'

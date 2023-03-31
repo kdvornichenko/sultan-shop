@@ -1,6 +1,7 @@
 import { ICartProduct } from 'models'
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { setProductsInCart } from '@/store/slices/productsSlice'
 
@@ -49,22 +50,29 @@ const CartProduct: FC<{
 	}
 
 	return (
-		<div className="flex  items-center gap-5">
+		<div className="flex max-lg:flex-col items-center gap-5">
 			{/* Изображение */}
 			<div className="max-w-xs">
 				<ProductPicture productImg={item.img} />
 			</div>
 			{/* Информация */}
-			<div className="mr-32">
+			<div className="md:mr-5 xl:mr-15 2xl:mr-32">
+				{/* Объем */}
 				<div className="flex items-center gap-2">
 					<ProductVolume volumeType={item.volumeType} volume={item.volume} />
 				</div>
-				<h2 className="mt-2 font-bold text-3xl">{item.title}</h2>
-				<p className="mt-2.5 font-light text-xs text-slate-700">
+				{/* Название товара */}
+				<Link to={`/catalog/${item.barcode}`}>
+					<h2 className="mt-2 font-bold text-xl md:text-2xl 2xl:text-3xl">
+						{item.title}
+					</h2>
+				</Link>
+				{/* Описание */}
+				<p className="mt-2.5 line-clamp-4 font-light text-xs text-slate-700">
 					{item.description}
 				</p>
 			</div>
-			<div className="flex items-center justify-between gap-10">
+			<div className="flex items-center justify-between gap-4 md:gap-6 lg:gap-8 xl:gap-10">
 				<SvgDivider height={49} opacity={0.2} />
 				{/* Счетчик */}
 				<Counter
@@ -74,7 +82,7 @@ const CartProduct: FC<{
 				/>
 				<SvgDivider height={49} opacity={0.2} />
 				{/* Цена товара с учетом количества */}
-				<div className="font-bold text-3xl">
+				<div className="w-10 text-center font-bold text-base sm:text-lg md:text-xl md:w-14 lg:text-xl lg:w-16 xl:text-2xl xl:w-20 2xl:w-24 2xl:text-3xl">
 					{Number(item.price) * Number(countOfProducts)}₸
 				</div>
 				<SvgDivider height={49} opacity={0.2} />

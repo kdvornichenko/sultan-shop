@@ -11,8 +11,8 @@ import ProductCard from '../ui/ProductCard/ProductCard'
 import CardSkeleton from './CardSkeleton'
 
 const Products = () => {
-	const products = useSelector(selectFilteredProducts)
 	const isLoading = useSelector(selectProductsLoading)
+	const products = useSelector(selectFilteredProducts)
 
 	return (
 		<>

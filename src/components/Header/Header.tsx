@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import useWindowSize from '@/hooks/useWindowSize'
 
-import Button from '../ui/Buttons/Button'
 import CatalogButton from '../ui/Buttons/CatalogButton'
 import PriceListButton from '../ui/Buttons/PriceListButton'
 import Input from '../ui/Input'
@@ -53,7 +52,7 @@ const Header = () => {
 				)}
 				<CartBlock />
 			</div>
-			{!windowSize.isDesktop && <MobileMenu menuIsOpen={menuIsOpen} />}	
+			{!windowSize.isDesktop && <MobileMenu menuIsOpen={menuIsOpen} />}
 		</header>
 	)
 }

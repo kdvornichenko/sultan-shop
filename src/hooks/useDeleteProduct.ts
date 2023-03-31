@@ -10,8 +10,8 @@ import {
 import { deleteCurrentProduct } from '@/store/slices/productsSlice'
 
 const useDeleteProduct = (barcode: string | undefined) => {
-	const productsData = useSelector(selectProductsData)
 	const dispatch = useDispatch()
+	const productsData = useSelector(selectProductsData)
 
 	const deleteProduct = () => {
 		const productToDelete = productsData.find(
@@ -19,21 +19,30 @@ const useDeleteProduct = (barcode: string | undefined) => {
 		)
 
 		if (productToDelete) {
-			const currentProductsData = JSON.parse(
-				localStorage.getItem('productsData') || '[]'
+			const shouldDelete = window.confirm(
+				'Вы уверены, что хотите удалить товар?'
 			)
 
-			const updatedProductsData = currentProductsData.filter(
-				(product: IProduct) => product.barcode !== barcode
-			)
+			if (shouldDelete) {
+				const currentProductsData = JSON.parse(
+					localStorage.getItem('productsData') || '[]'
+				)
 
-			localStorage.setItem('productsData', JSON.stringify(updatedProductsData))
+				const updatedProductsData = currentProductsData.filter(
+					(product: IProduct) => product.barcode !== barcode
+				)
 
-			dispatch(setIsError(false))
-			dispatch(deleteCurrentProduct(productToDelete.barcode))
-			dispatch(
-				setMessageAfterDataFetch(`Товар со штрихкодом ${barcode} удален`)
-			)
+				localStorage.setItem(
+					'productsData',
+					JSON.stringify(updatedProductsData)
+				)
+
+				dispatch(setIsError(false))
+				dispatch(deleteCurrentProduct(productToDelete.barcode))
+				dispatch(
+					setMessageAfterDataFetch(`Товар со штрихкодом ${barcode} удален`)
+				)
+			}
 		} else {
 			dispatch(
 				setMessageAfterDataFetch(`Товар со штрихкодом ${barcode} не найден`)

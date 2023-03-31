@@ -1,7 +1,6 @@
 import { IButton, ICartProduct } from 'models'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import { setProductsInCart } from '@/store/slices/productsSlice'
 
@@ -15,6 +14,7 @@ const Button: FC<IButton> = ({
 	variant,
 	product,
 	countOfProducts,
+	setIsModalVisible,
 }) => {
 	const initialProductData = {
 		img: { imgUrl: product?.img.imgUrl, isLocal: product?.img.isLocal },
@@ -56,6 +56,12 @@ const Button: FC<IButton> = ({
 			}
 			return
 		}
+
+		if (variant === 'send-order') {
+			dispatch(setProductsInCart([]))
+			localStorage.setItem('cartData', JSON.stringify([]))
+			setIsModalVisible && setIsModalVisible(true)
+		}
 	}
 
 	return (
@@ -67,7 +73,7 @@ const Button: FC<IButton> = ({
 			<div>
 				{product ? (product?.isInStock ? text : 'Нет в наличии') : text}
 			</div>
-			<Icon name={icon} size={iconSize} />
+			{icon && <Icon name={icon} size={iconSize} />}
 		</button>
 	)
 }

@@ -21,13 +21,14 @@ export interface IMenuNav {
 
 export interface IButton {
 	text: string
-	icon: TypeIconName
+	icon?: TypeIconName
 	iconSize?: string
 	className: string
 	variant: string
 	product?: IProduct | undefined
 	countOfProducts?: number
 	link?: string
+	setIsModalVisible?: Dispatch<SetStateAction<boolean>>
 }
 
 export interface IInput {
@@ -63,6 +64,7 @@ export interface IProduct {
 	price: string
 	label?: string
 	isInStock: boolean | null
+	typeOfCare: string[]
 }
 
 export interface ICartProduct {

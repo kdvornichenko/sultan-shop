@@ -32,7 +32,8 @@
 		"react-router-dom": "^6.9.0",
 		"react-spinners": "^0.13.8",
 		"sass": "^1.59.3",
-		"sort-by": "^1.2.0"
+		"sort-by": "^1.2.0",
+		"use-react-router-breadcrumbs": "^4.0.1"
 	},
 	"devDependencies": {
 		"@trivago/prettier-plugin-sort-imports": "^4.1.1",

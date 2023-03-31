@@ -1,8 +1,6 @@
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import Icon from '../ui/Icons/Icon'
-
 const CardSkeleton = () => {
 	return (
 		<div className="px-6 py-7 max-w-xs w-full bg-white rounded-xl shadow-md">

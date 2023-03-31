@@ -31,7 +31,7 @@ const Footer = () => {
 						Компания «Султан» — снабжаем розничные магазины товарами "под ключ"
 						в Кокчетаве и Акмолинской области
 					</p>
-					<div className="mt-11">
+					<div className="mt-6 sm:mt-7 md:mt-8 lg:mt-10 xl:mt-12">
 						<span className="text-xs">Подпишись на скидки и акции</span>
 						<Input
 							placeholder="Введите ваш E-mail"
@@ -72,12 +72,12 @@ const Footer = () => {
 					<FooterMessengers className="mt-5" />
 				</div>
 				{/* Котакты */}
-				<div className="w-full">
+				<div className="max-sm:w-full">
 					<h4>Контакты:</h4>
 					<div className="mt-2.5 sm:mt-3 md:mt-4 lg:mt-6">
 						<div className="flex items-start justify-between">
 							<CallBlock />
-							<FooterMessengers className="ml-4 sm:hidden" />
+							<FooterMessengers className="ml-4 text-sm sm:hidden " />
 						</div>
 						<div className="mt-2.5 sm:mt-3 md:mt-4 lg:mt-6 text-sm">
 							<Link to="mailto:opt.sultan@mail.ru">

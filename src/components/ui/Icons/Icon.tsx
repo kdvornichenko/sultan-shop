@@ -1,6 +1,6 @@
 import { IIcon } from 'models'
 import { FC } from 'react'
-import { FaTelegramPlane, FaWhatsapp } from 'react-icons/fa'
+import { FaRegFrown, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa'
 import * as FeatherIcons from 'react-icons/fi'
 import * as MaterialIcons from 'react-icons/md'
 
@@ -11,6 +11,7 @@ const Icon: FC<IIcon> = ({ name, size }) => {
 		...MaterialIcons,
 		...FeatherIcons,
 		FaTelegramPlane,
+		FaRegFrown,
 		FaWhatsapp,
 	}
 
@@ -19,7 +20,9 @@ const Icon: FC<IIcon> = ({ name, size }) => {
 		: name.includes('Fi')
 		? icon[name as keyof typeof FeatherIcons]
 		: icon[
-				(name as keyof typeof FaTelegramPlane, name as keyof typeof FaWhatsapp)
+				(name as keyof typeof FaTelegramPlane,
+				name as keyof typeof FaWhatsapp,
+				name as keyof typeof FaRegFrown)
 		  ]
 
 	return <IconComponent size={size} />

@@ -3,16 +3,22 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { selectProductsInCart } from '@/store/reducers/productsReducer'
-import { setProductsInCart } from '@/store/slices/productsSlice'
+import {
+	selectCartProductsAmount,
+	selectProductsInCart,
+} from '@/store/reducers/productsReducer'
+import {
+	setCartProductsAmount,
+	setProductsInCart,
+} from '@/store/slices/productsSlice'
 
 import Icon from '../ui/Icons/Icon'
 
 const CartBlock = () => {
 	const dispatch = useDispatch()
 	const cartData = useSelector(selectProductsInCart)
+	const cartProductsAmount = useSelector(selectCartProductsAmount)
 	const [cartProductsCount, setCartProductsCount] = useState<number>(0)
-	const [cartProductsAmount, setCartProductsAmount] = useState<number>(0)
 
 	useEffect(() => {
 		dispatch(
@@ -30,13 +36,15 @@ const CartBlock = () => {
 			}, 0)
 		)
 
-		setCartProductsAmount(
-			cartData.reduce((acc, obj) => {
-				if (obj.count && obj.price) {
-					return acc + obj.count * +obj.price
-				}
-				return acc
-			}, 0)
+		dispatch(
+			setCartProductsAmount(
+				cartData.reduce((acc, obj) => {
+					if (obj.count && obj.price) {
+						return acc + obj.count * +obj.price
+					}
+					return acc
+				}, 0)
+			)
 		)
 	}, [cartData])
 
@@ -52,7 +60,7 @@ const CartBlock = () => {
 
 				<div className="hidden md2:block">
 					<div className="font-light text-xs text-slate-700">Корзина</div>
-					<div className="font-semibold text-sm group-hover:text-orange-700 transition">
+					<div className="w-14 font-semibold text-sm group-hover:text-orange-700 transition">
 						{cartProductsAmount}₸
 					</div>
 				</div>

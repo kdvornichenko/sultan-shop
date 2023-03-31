@@ -3,6 +3,7 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 
 import AfterSubmitMessage from './AfterSubmitMessage'
 import SubmitButton from './SubmitButton'
+import { filterData } from '@/data/filter.data'
 
 const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 	const [isError, setIsError] = useState<boolean>(false)
@@ -12,11 +13,25 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 	const [checkedVolumeType, setCheckedVolumeType] = useState<string>('weight')
 	const [volumeText, setVolumeText] = useState<string>('вес')
 	const [message, setMessage] = useState<string>('')
+	// -----------------------------------------------
+	const [typesOfCare, setTypesOfCare] = useState<string[]>([])
+	const typeOfCareOptions = filterData
 
+	const handleTypeOfCareChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const typeId = event.target.value
+		setTypesOfCare((prevTypesOfCare) => {
+			if (prevTypesOfCare.includes(typeId)) {
+				return prevTypesOfCare.filter((type) => type !== typeId)
+			} else {
+				return [...prevTypesOfCare, typeId]
+			}
+		})
+	}
+	// ------------------------------------------------
 	const initialFormData: IProduct = {
 		title: '',
 		img: {
-			imgUrl: `/sultan-shop/img/products/${product?.barcode}`,
+			imgUrl: '',
 			isLocal: true,
 		},
 		label: '',
@@ -29,6 +44,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 		description: '',
 		price: '',
 		isInStock: null,
+		typeOfCare: [],
 	}
 
 	useEffect(() => {
@@ -49,6 +65,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				description: product?.description,
 				price: product?.price,
 				isInStock: product?.isInStock,
+				typeOfCare: product?.typeOfCare,
 			})
 		}
 	}, [product])
@@ -82,6 +99,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 	const handleRadioBtnChange = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.value === 'global') {
 			setIsLocalImgUrl(false)
+			formData.img.imgUrl = ''
 		} else if (event.target.value === 'local') {
 			setIsLocalImgUrl(true)
 		}
@@ -104,10 +122,6 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 			}
 		}
 	}
-
-	useEffect(() => {
-		console.log(formData.isInStock)
-	}, [isInStock])
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
@@ -134,6 +148,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 									: formData.img.imgUrl,
 								isLocal: formData.img.isLocal,
 							},
+							typeOfCare: typesOfCare,
 						}
 					} else {
 						return product
@@ -161,6 +176,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 								: formData.img.imgUrl,
 							isLocal: formData.img.isLocal,
 						},
+						typeOfCare: typesOfCare,
 					},
 				])
 			)
@@ -170,15 +186,22 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 		setIsError(false)
 	}
 
+	const RequireStar = () => {
+		return <span className="text-red-500">*</span>
+	}
+
 	return (
 		<>
-			<form className="add-product-form" onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<h2 className="mb-5 font-semibold text-3xl text-center">
 					{product ? 'Редактировать' : 'Добавить'} товар
 				</h2>
 
 				<div>
-					<label htmlFor="title">Название товара:</label>
+					<label htmlFor="title">
+						<RequireStar />
+						Название товара:
+					</label>
 					<input
 						type="text"
 						id="title"
@@ -190,7 +213,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label>Url изображения:</label>
+					<label>
+						<RequireStar />
+						Url изображения:
+					</label>
 					<div className="flex flex-col">
 						<label htmlFor="local">
 							<input
@@ -221,7 +247,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 
 				{!isLocalImgUrl && (
 					<div>
-						<label htmlFor="label">Введите URL изображения:</label>
+						<label htmlFor="label">
+							<RequireStar />
+							Введите URL изображения:
+						</label>
 						<input
 							type="text"
 							id="imgUrl"
@@ -245,7 +274,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label>Тип размера:</label>
+					<label>
+						<RequireStar />
+						Тип размера:
+					</label>
 					<div className="flex flex-col">
 						<label htmlFor="weight">
 							<input
@@ -275,7 +307,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label htmlFor="volume">Введите {volumeText}:</label>
+					<label htmlFor="volume">
+						<RequireStar />
+						Введите {volumeText}:
+					</label>
 					<input
 						type="text"
 						id="volume"
@@ -287,7 +322,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label htmlFor="barcode">Штрихкод:</label>
+					<label htmlFor="barcode">
+						<RequireStar />
+						Штрихкод:
+					</label>
 					<input
 						type="number"
 						id="barcode"
@@ -299,7 +337,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label htmlFor="manufacturer">Производитель:</label>
+					<label htmlFor="manufacturer">
+						<RequireStar />
+						Производитель:
+					</label>
 					<input
 						type="text"
 						id="manufacturer"
@@ -311,7 +352,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label htmlFor="brand">Бренд:</label>
+					<label htmlFor="brand">
+						<RequireStar />
+						Бренд:
+					</label>
 					<input
 						type="text"
 						id="brand"
@@ -323,7 +367,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label htmlFor="description">Описание:</label>
+					<label htmlFor="description">
+						<RequireStar />
+						Описание:
+					</label>
 					<textarea
 						id="description"
 						name="description"
@@ -335,7 +382,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label htmlFor="price">Цена:</label>
+					<label htmlFor="price">
+						<RequireStar />
+						Цена:
+					</label>
 					<input
 						type="number"
 						id="price"
@@ -347,7 +397,10 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				</div>
 
 				<div>
-					<label>Наличие товара:</label>
+					<label>
+						<RequireStar />
+						Наличие товара:
+					</label>
 					<div className="flex flex-col">
 						<label htmlFor="inStock">
 							<input
@@ -380,6 +433,19 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 
 				<SubmitButton text={product ? 'Сохранить' : 'Добавить'} />
 			</form>
+			<div className="flex flex-col">
+				{typeOfCareOptions.map(({ type, title }) => (
+					<label key={type}>
+						<input
+							type="checkbox"
+							value={type}
+							onChange={handleTypeOfCareChange}
+							checked={typesOfCare.includes(type)}
+						/>
+						<span>{title}</span>
+					</label>
+				))}
+			</div>
 		</>
 	)
 }

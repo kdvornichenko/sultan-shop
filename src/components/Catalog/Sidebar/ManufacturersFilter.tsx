@@ -9,7 +9,7 @@ import {
 	selectProductsLoading,
 } from '@/store/reducers/productsReducer'
 import {
-	setFilteredProducts,
+	setFilteredByManufacturerProducts,
 	setManufacturerFilter,
 } from '@/store/slices/productsSlice'
 
@@ -30,7 +30,7 @@ const ManufacturersFilter = () => {
 				selectedManufacturer.includes(product.manufacturer)
 			)
 		}
-		dispatch(setFilteredProducts(filtered))
+		dispatch(setFilteredByManufacturerProducts(filtered))
 	}, [selectedManufacturer, productsData, dispatch])
 
 	const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,10 +42,8 @@ const ManufacturersFilter = () => {
 		setSearchQuery(event.target.value)
 	}
 
-	const manufacturers = useMemo(
-		() =>
-			Array.from(new Set(productsData?.map((product) => product.manufacturer))),
-		[productsData]
+	const manufacturers = Array.from(
+		new Set(productsData?.map((product) => product.manufacturer))
 	)
 
 	const filteredManufacturers = manufacturers.filter((manufacturer) => {
