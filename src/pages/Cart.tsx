@@ -7,8 +7,8 @@ import {
 	selectProductsInCart,
 } from '@/store/reducers/productsReducer'
 
-import CartEmpty from '@/components/Cart/CartEmpty'
 import CartProduct from '@/components/Cart/CartProduct'
+import Empty from '@/components/Empty'
 import ModalOrderSuccess from '@/components/Modal/ModalOrderSuccess'
 import Button from '@/components/ui/Buttons/Button'
 import SvgDivider from '@/components/ui/Svg/SvgDivider'
@@ -24,7 +24,7 @@ const Cart = () => {
 			<div className="mt-6 sm:mt-7 md:mt-8 lg:mt-10 xl:mt-12">
 				<SvgDivider height={1} width={'100%'} opacity={0.3} />
 				{cartData.length === 0 ? (
-					<CartEmpty />
+					<Empty text="Ваша корзина пуста" />
 				) : (
 					<>
 						{cartData.map((item: ICartProduct) => (

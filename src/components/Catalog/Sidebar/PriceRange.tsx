@@ -1,14 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {
-	selectFilteredProducts,
-	selectProductsData,
-} from '@/store/reducers/productsReducer'
-import {
-	setFilteredByPriceProducts,
-	setFilteredProducts,
-} from '@/store/slices/productsSlice'
+import { selectProductsData } from '@/store/reducers/productsReducer'
+import { setFilteredByPriceProducts } from '@/store/slices/productsSlice'
 
 const PriceRange = () => {
 	const dispatch = useDispatch()
@@ -30,6 +24,7 @@ const PriceRange = () => {
 				(priceMin === '' || Number(item.price) >= Number(priceMin)) &&
 				(priceMax === '' || Number(item.price) <= Number(priceMax))
 		)
+
 		dispatch(setFilteredByPriceProducts(priceFilteredProducts))
 	}, [priceMin, priceMax, products])
 

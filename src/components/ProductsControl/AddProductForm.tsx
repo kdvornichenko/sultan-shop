@@ -1,11 +1,20 @@
-import { IProduct } from 'models'
+import { IFilterItem, IProduct } from 'models'
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { setNewTypeOfCareOptions } from '@/store/slices/productsSlice'
+
+import Details from '../ui/Details'
+import Icon from '../ui/Icons/Icon'
 
 import AfterSubmitMessage from './AfterSubmitMessage'
+import FormControlComponent from './FormControlComponent'
 import SubmitButton from './SubmitButton'
 import { filterData } from '@/data/filter.data'
 
 const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
+	const dispatch = useDispatch()
+
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isLocalImgUrl, setIsLocalImgUrl] = useState<boolean>(true)
 	const [isInStock, setIsInStock] = useState<boolean | null>(null)
@@ -13,21 +22,12 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 	const [checkedVolumeType, setCheckedVolumeType] = useState<string>('weight')
 	const [volumeText, setVolumeText] = useState<string>('вес')
 	const [message, setMessage] = useState<string>('')
-	// -----------------------------------------------
 	const [typesOfCare, setTypesOfCare] = useState<string[]>([])
-	const typeOfCareOptions = filterData
 
-	const handleTypeOfCareChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const typeId = event.target.value
-		setTypesOfCare((prevTypesOfCare) => {
-			if (prevTypesOfCare.includes(typeId)) {
-				return prevTypesOfCare.filter((type) => type !== typeId)
-			} else {
-				return [...prevTypesOfCare, typeId]
-			}
-		})
-	}
-	// ------------------------------------------------
+	const [editIndex, setEditIndex] = useState<number | null>(null)
+
+	const [typeOfCareOptions, setTypeOfCareOptions] = useState<IFilterItem[]>([])
+
 	const initialFormData: IProduct = {
 		title: '',
 		img: {
@@ -49,24 +49,8 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 
 	useEffect(() => {
 		if (product) {
-			setFormData({
-				title: product?.title,
-				img: {
-					imgUrl: product?.img.imgUrl,
-					isLocal: product?.img.isLocal,
-				},
-				label: product?.label,
-				volumeType: product?.volumeType,
-				volume: product?.volume,
-				barcode: product?.barcode,
-				vendorCode: product?.vendorCode,
-				manufacturer: product?.manufacturer,
-				brand: product?.brand,
-				description: product?.description,
-				price: product?.price,
-				isInStock: product?.isInStock,
-				typeOfCare: product?.typeOfCare,
-			})
+			setFormData({ ...product })
+			setTypesOfCare(product?.typeOfCare)
 		}
 	}, [product])
 
@@ -121,6 +105,37 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 				setVolumeText('объем')
 			}
 		}
+	}
+
+	const handleTypeOfCareChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const typeId = event.target.value
+		const isChecked = event.target.checked
+
+		setTypesOfCare((prevTypesOfCare) => {
+			if (isChecked) {
+				return [...prevTypesOfCare, typeId]
+			} else {
+				return prevTypesOfCare.filter((type) => type !== typeId)
+			}
+		})
+	}
+	useEffect(() => {
+		const savedOptions = localStorage.getItem('typeOfCareOptions')
+		if (savedOptions) {
+			setTypeOfCareOptions(JSON.parse(savedOptions))
+			dispatch(setNewTypeOfCareOptions(typeOfCareOptions))
+		} else {
+			setTypeOfCareOptions(filterData)
+			dispatch(setNewTypeOfCareOptions(typeOfCareOptions))
+		}
+	}, [])
+
+	useEffect(() => {
+		localStorage.setItem('typeOfCareOptions', JSON.stringify(typeOfCareOptions))
+	}, [typeOfCareOptions])
+
+	const onTypeOfCareEditClick = (index: number) => {
+		setEditIndex(index)
 	}
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -182,36 +197,31 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 			)
 			setMessage(`Товар со штрихкодом ${formData.barcode} добавлен`)
 		}
+		window.location.reload()
 		setFormData(initialFormData)
 		setIsError(false)
 	}
-
 	const RequireStar = () => {
 		return <span className="text-red-500">*</span>
 	}
-
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
 				<h2 className="mb-5 font-semibold text-3xl text-center">
 					{product ? 'Редактировать' : 'Добавить'} товар
 				</h2>
-
+				{/* Название товара: */}
 				<div>
-					<label htmlFor="title">
-						<RequireStar />
-						Название товара:
-					</label>
-					<input
-						type="text"
-						id="title"
+					<FormControlComponent
+						isRequired={true}
 						name="title"
-						value={formData.title}
+						text="Название товара:"
+						inputType="text"
+						title={formData.title}
 						onChange={handleChange}
-						required
 					/>
 				</div>
-
+				{/* Url изображения: */}
 				<div>
 					<label>
 						<RequireStar />
@@ -244,35 +254,31 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 						</label>
 					</div>
 				</div>
-
+				{/* Поле ввода URL изображения */}
 				{!isLocalImgUrl && (
 					<div>
-						<label htmlFor="label">
-							<RequireStar />
-							Введите URL изображения:
-						</label>
-						<input
-							type="text"
-							id="imgUrl"
+						<FormControlComponent
+							isRequired={true}
 							name="imgUrl"
-							value={formData.img.imgUrl}
+							text="Введите URL изображения:"
+							inputType="text"
+							title={formData.img.imgUrl}
 							onChange={handleChange}
-							required
 						/>
 					</div>
 				)}
-
+				{/* Лэйбл: */}
 				<div>
-					<label htmlFor="label">Лэйбл:</label>
-					<input
-						type="text"
-						id="label"
+					<FormControlComponent
+						isRequired={false}
 						name="label"
-						value={formData.label}
+						text="Лэйбл:"
+						inputType="text"
+						title={formData.label}
 						onChange={handleChange}
 					/>
 				</div>
-
+				{/* Тип размера: */}
 				<div>
 					<label>
 						<RequireStar />
@@ -305,97 +311,74 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 						</label>
 					</div>
 				</div>
-
+				{/* Поле ввода объема */}
 				<div>
-					<label htmlFor="volume">
-						<RequireStar />
-						Введите {volumeText}:
-					</label>
-					<input
-						type="text"
-						id="volume"
+					<FormControlComponent
+						isRequired={true}
 						name="volume"
-						value={formData.volume}
+						text={`Введите ${volumeText}:`}
+						inputType="text"
+						title={formData.volume}
 						onChange={handleChange}
-						required
 					/>
 				</div>
-
+				{/* Штрихкод: */}
 				<div>
-					<label htmlFor="barcode">
-						<RequireStar />
-						Штрихкод:
-					</label>
-					<input
-						type="number"
-						id="barcode"
+					<FormControlComponent
+						isRequired={true}
 						name="barcode"
-						value={formData.barcode}
+						text="Штрихкод:"
+						inputType="number"
+						title={formData.barcode}
 						onChange={handleChange}
-						required
 					/>
 				</div>
-
+				{/* Производитель: */}
 				<div>
-					<label htmlFor="manufacturer">
-						<RequireStar />
-						Производитель:
-					</label>
-					<input
-						type="text"
-						id="manufacturer"
+					<FormControlComponent
+						isRequired={true}
 						name="manufacturer"
-						value={formData.manufacturer}
+						text="Производитель:"
+						inputType="text"
+						title={formData.manufacturer}
 						onChange={handleChange}
-						required
 					/>
 				</div>
-
+				{/* Бренд: */}
 				<div>
-					<label htmlFor="brand">
-						<RequireStar />
-						Бренд:
-					</label>
-					<input
-						type="text"
-						id="brand"
+					<FormControlComponent
+						isRequired={true}
 						name="brand"
-						value={formData.brand}
+						text="Бренд:"
+						inputType="text"
+						title={formData.brand}
 						onChange={handleChange}
-						required
 					/>
 				</div>
-
+				{/* Описание: */}
 				<div>
-					<label htmlFor="description">
-						<RequireStar />
-						Описание:
-					</label>
-					<textarea
-						id="description"
+					<FormControlComponent
+						isRequired={true}
 						name="description"
-						value={formData.description}
+						text="Описание:"
+						inputType="text"
+						title={formData.description}
 						onChange={handleChange}
 						className="h-36"
-						required
 					/>
 				</div>
-
+				{/* Цена: */}
 				<div>
-					<label htmlFor="price">
-						<RequireStar />
-						Цена:
-					</label>
-					<input
-						type="number"
-						id="price"
+					<FormControlComponent
+						isRequired={true}
 						name="price"
-						value={formData.price}
+						text="Цена:"
+						inputType="number"
+						title={formData.price}
 						onChange={handleChange}
-						required
 					/>
 				</div>
-
+				{/* Наличие товара: */}
 				<div>
 					<label>
 						<RequireStar />
@@ -428,24 +411,73 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 						</label>
 					</div>
 				</div>
-
+				<div className="items-start max-md:flex-col gap-2">
+					{/* Назначение товара: */}
+					<label className="max-md:max-w-none">
+						<RequireStar />
+						Назначение товара:
+					</label>
+					<Details title="Раскрыть список">
+						<div className="flex flex-col items-start gap-1">
+							{typeOfCareOptions.map((option, index) => (
+								<div key={option.type}>
+									<label htmlFor={option.type} />
+									<div className="summary-elem">
+										{editIndex === index ? (
+											<>
+												<input
+													type="text"
+													value={option.title}
+													onChange={(event) =>
+														setTypeOfCareOptions((prev) =>
+															prev.map((prevOption, prevIndex) =>
+																prevIndex === index
+																	? {
+																			...prevOption,
+																			title: event.target.value,
+																	  }
+																	: prevOption
+															)
+														)
+													}
+												/>
+												<button
+													className="w-5 h-5 flex items-center justify-center text-white bg-slate-700 rounded-full "
+													onClick={() => setEditIndex(null)}
+												>
+													<Icon name="MdDone" size="1rem" />
+												</button>
+											</>
+										) : (
+											<>
+												<input
+													type="checkbox"
+													id={option.type}
+													name={option.title}
+													value={option.type}
+													checked={typesOfCare.includes(option.type)}
+													onChange={handleTypeOfCareChange}
+												/>
+												<span>{option.title}</span>
+												<div
+													className="cursor-pointer"
+													onClick={() => onTypeOfCareEditClick(index)}
+												>
+													<Icon name="FiEdit" />
+												</div>
+											</>
+										)}
+									</div>
+								</div>
+							))}
+						</div>
+					</Details>
+				</div>
+				{/* Сообщение об успехе/ошибке */}
 				<AfterSubmitMessage isError={isError} message={message} />
-
+				{/* Кнопка отправки */}
 				<SubmitButton text={product ? 'Сохранить' : 'Добавить'} />
 			</form>
-			<div className="flex flex-col">
-				{typeOfCareOptions.map(({ type, title }) => (
-					<label key={type}>
-						<input
-							type="checkbox"
-							value={type}
-							onChange={handleTypeOfCareChange}
-							checked={typesOfCare.includes(type)}
-						/>
-						<span>{title}</span>
-					</label>
-				))}
-			</div>
 		</>
 	)
 }

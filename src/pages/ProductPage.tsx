@@ -15,10 +15,10 @@ import {
 	setCurrentProductTitle,
 } from '@/store/slices/productsSlice'
 
+import ModalProductSettings from '@/components/Modal/ModalProductSettings'
 import Delivery from '@/components/ProductPage/Delivery'
 import PriceList from '@/components/ProductPage/PriceList'
 import Share from '@/components/ProductPage/Share'
-import AddProductForm from '@/components/ProductsControl/AddProductForm'
 import Button from '@/components/ui/Buttons/Button'
 import Counter from '@/components/ui/Counter'
 import Details from '@/components/ui/Details'
@@ -26,6 +26,7 @@ import Icon from '@/components/ui/Icons/Icon'
 import ProductVolume from '@/components/ui/ProductCard/ProductVolume'
 import ProductPicture from '@/components/ui/ProductPicture'
 import SvgDivider from '@/components/ui/Svg/SvgDivider'
+import { filterData } from '@/data/filter.data'
 
 const ProductPage: FC = ({}) => {
 	const dispatch = useDispatch()
@@ -75,6 +76,13 @@ const ProductPage: FC = ({}) => {
 		document.documentElement.classList.toggle('overflow-y-hidden')
 	}
 
+	const matchedFilters = filterData
+		.filter((filter) => currentProduct?.typeOfCare.includes(filter.type))
+		.map((filter) => filter.title)
+		.join(', ')
+
+	console.log(matchedFilters)
+
 	const handleDeleteProduct = useDeleteProduct(currentProduct?.barcode)
 
 	return (
@@ -97,17 +105,10 @@ const ProductPage: FC = ({}) => {
 					<div className="flex gap-1">
 						{/* Редактирование */}
 						{isSettings && (
-							<div className="fixed top-0 left-0 bottom-0 right-0 m-auto w-full max-w-7xl h-4/5 flex items-center justify-center bg-white rounded-md ring-2 ring-gray-300 shadow-md z-50 overflow-y-auto p-4 max-md:h-full md:p-6 lg:p-8 xl:p-10">
-								<div className="w-3/5 h-full max-md:w-full max-lg:w-4/5">
-									<AddProductForm product={currentProduct} />
-								</div>
-								<div
-									onClick={handleSettingsClick}
-									className="absolute top-2 right-2 text-slate-700 cursor-pointer lg:top-5 lg:right-5"
-								>
-									<Icon name="MdClose" size="2rem" />
-								</div>
-							</div>
+							<ModalProductSettings
+								currentProduct={currentProduct}
+								onCloseClick={handleSettingsClick}
+							/>
 						)}
 						<div
 							onClick={handleSettingsClick}
@@ -204,20 +205,22 @@ const ProductPage: FC = ({}) => {
 				</div>
 
 				{/* Описание товара */}
-				<Details title="Описание">{currentProduct?.description}</Details>
+				<div className="mt-8">
+					<Details title="Описание">{currentProduct?.description}</Details>
+				</div>
 
 				<div className="mt-5 max-w-xs">
 					<SvgDivider height={1} width="100%" opacity={0.3} />
 				</div>
 
 				{/* Характеристики товара */}
-				<div>
+				<div className="mt-8">
 					<Details title="Характеристики">
 						<ul className="font-light text-sm text-slate-700 [&>li]:mt-1.5 [&>li>span]:font-medium [&>li>span]:text-primary">
 							<li>
-								Назначение: <span>ДОБАВИТЬ</span>
+								Назначение:
+								<span> {matchedFilters}</span>
 							</li>
-							<li>Тип:</li>
 							<li>
 								Производитель: <span>{currentProduct?.manufacturer}</span>
 							</li>

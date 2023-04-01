@@ -13,12 +13,14 @@ import {
 	setManufacturerFilter,
 } from '@/store/slices/productsSlice'
 
+import Icon from '@/components/ui/Icons/Icon'
 import Input from '@/components/ui/Input'
 
 const ManufacturersFilter = () => {
 	const dispatch = useDispatch()
 	const selectedManufacturer = useSelector(selectManufacturerFilter)
-	const [searchQuery, setSearchQuery] = useState('')
+	const [searchQuery, setSearchQuery] = useState<string>('')
+	const [visibleManufacturers, setVisibleManufacturers] = useState<number>(4)
 
 	const productsData = useSelector(selectProductsData)
 	const isLoading = useSelector(selectProductsLoading)
@@ -50,6 +52,21 @@ const ManufacturersFilter = () => {
 		return manufacturer.toLowerCase().includes(searchQuery.toLowerCase())
 	})
 
+	const visibleManufacturersList = filteredManufacturers.slice(
+		0,
+		visibleManufacturers
+	)
+	const hiddenManufacturersList =
+		filteredManufacturers.slice(visibleManufacturers)
+
+	const handleShowMoreClick = () => {
+		if (hiddenManufacturersList.length > 0) {
+			setVisibleManufacturers(filteredManufacturers.length)
+		} else {
+			setVisibleManufacturers(4)
+		}
+	}
+
 	return (
 		<>
 			{isLoading ? (
@@ -69,7 +86,7 @@ const ManufacturersFilter = () => {
 						handleSearchChange={handleSearchChange}
 					/>
 					<div className="mt-4 manufacturers-filter">
-						{filteredManufacturers.map((manufacturer) => (
+						{visibleManufacturersList.map((manufacturer) => (
 							<label key={manufacturer} htmlFor={manufacturer}>
 								<input
 									type="checkbox"
@@ -90,6 +107,23 @@ const ManufacturersFilter = () => {
 								</span>
 							</label>
 						))}
+						<button
+							onClick={handleShowMoreClick}
+							className="w-max mt-2 ml-2 flex items-center gap-1 font-medium text-xs text-slate-700"
+						>
+							<span>
+								{hiddenManufacturersList.length > 0
+									? 'Показать все'
+									: 'Свернуть'}
+							</span>
+							<span
+								className={
+									hiddenManufacturersList.length === 0 ? 'rotate-180' : ''
+								}
+							>
+								<Icon name="MdArrowDropDown" size="1rem" />
+							</span>
+						</button>
 					</div>
 				</>
 			)}

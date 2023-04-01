@@ -1,8 +1,8 @@
-import { FC, useRef, useState } from 'react'
+import { FC, useState } from 'react'
 
-import FilterTypeOfCare from '../FilterTypeOfCare'
 import Sort from '../Sort'
 
+import FilterTypeOfCare from './FilterTypeOfCare'
 import ManufacturersFilter from './ManufacturersFilter'
 import PriceRange from './PriceRange'
 import Icon from '@/components/ui/Icons/Icon'
@@ -36,7 +36,7 @@ const Sidebar: FC<{
 				</div>
 				<div
 					className={
-						(isOpen ? 'h-[354px]' : 'max-md:h-0') +
+						(isOpen ? 'h-[650px]' : 'max-md:h-0') +
 						' ' +
 						'transition-[height] max-md:overflow-hidden md:h-auto'
 					}

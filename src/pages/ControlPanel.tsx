@@ -1,5 +1,5 @@
 import AddProductForm from '@/components/ProductsControl/AddProductForm'
-import DeleteProductForm from '@/components/ProductsControl/DeleteProductForm'
+import ControlProdcts from '@/components/ProductsControl/ControlProdcts'
 
 const ControlPanel = () => {
 	return (
@@ -8,7 +8,7 @@ const ControlPanel = () => {
 				<AddProductForm />
 			</div>
 			<div className="max-md:w-full w-1/2">
-				<DeleteProductForm />
+				<ControlProdcts />
 			</div>
 		</div>
 	)

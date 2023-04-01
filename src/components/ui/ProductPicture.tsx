@@ -27,7 +27,7 @@ const ProductPicture: FC<{ productImg: IProductImg | undefined }> = ({
 				ref={imgRef}
 				src={isLocal ? imgUrl + '.png' : imgUrl}
 				alt={productImg?.imgUrl}
-				className="mx-auto"
+				className="mx-auto rounded-lg"
 				onLoad={handleImgLoad}
 			/>
 		</picture>

@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react'
 
 import useCompareAndFilterProducts from '@/hooks/useCompareAndFilterProducts'
 
-import Filter from '@/components/Catalog/FilterTypeOfCare'
 import Products from '@/components/Catalog/Products'
+import FilterTypeOfCare from '@/components/Catalog/Sidebar/FilterTypeOfCare'
 import Sidebar from '@/components/Catalog/Sidebar/Sidebar'
 import Sort from '@/components/Catalog/Sort'
 import { FiltersState } from '@/types/filter.types'
@@ -27,7 +27,7 @@ const Catalog = () => {
 			</div>
 
 			<div className="mt-6 top-filter">
-				<Filter filters={filters} setFilters={handleFilterChange} />
+				<FilterTypeOfCare filters={filters} setFilters={handleFilterChange} />
 			</div>
 
 			<div className="mt-5 flex gap-2 sm:mt-6 max-md:flex-col md:mt-7 lg:mt-8 xl:mt-10 ">

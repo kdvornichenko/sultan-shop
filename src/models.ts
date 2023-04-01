@@ -86,3 +86,5 @@ export interface ManufacturerCheckboxProps {
 	setCheckedState: Dispatch<SetStateAction<boolean[]>>
 	index: number
 }
+
+

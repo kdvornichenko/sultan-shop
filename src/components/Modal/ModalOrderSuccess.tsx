@@ -15,7 +15,7 @@ const ModalOrderSuccess: FC<{
 					<Icon name="MdClose" size="1.5rem" />
 				</div>
 				<div className="w-15 h-15 flex items-center justify-center rounded-full bg-orange-500 text-white">
-					<Icon name="MdCheck" size="1.5rem" />
+					<Icon name="MdDoneAll" size="1.5rem" />
 				</div>
 				<div className="font-medium uppercase text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-[40px]">
 					Спасибо за заказ

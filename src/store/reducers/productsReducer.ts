@@ -33,4 +33,7 @@ export const selectProductsInCart = (state: RootState) =>
 export const selectCartProductsAmount = (state: RootState) =>
 	state.products.cartProductsAmount
 
+export const selectNewTypeOfCareOptions = (state: RootState) =>
+	state.products.typeOfCareOptions
+
 export default productsSlice.reducer

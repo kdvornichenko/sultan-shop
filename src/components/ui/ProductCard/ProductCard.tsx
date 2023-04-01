@@ -13,17 +13,6 @@ import ProductVolume from './ProductVolume'
 const ProductCard: FC<{ product?: IProduct }> = ({ product }) => {
 	const dispatch = useDispatch()
 
-	const labelCss = () => {
-		switch (product?.label?.toLowerCase()) {
-			case 'популярное':
-				return 'bg-green-500'
-			case 'хит':
-				return 'bg-red-500'
-			default:
-				return
-		}
-	}
-
 	const handleProductClick = () => {
 		dispatch(setCurrentProductBarcode(product?.barcode))
 	}
@@ -31,15 +20,11 @@ const ProductCard: FC<{ product?: IProduct }> = ({ product }) => {
 	return (
 		<div className="px-4 py-7 w-full max-w-[290px] bg-white rounded-xl transition shadow-md hover:shadow-xl sx:max-w-[48%] md:px-6 lg:max-w-[32%] 2xl:max-w-xs">
 			<div className="relative">
-				<div
-					className={
-						labelCss() +
-						' ' +
-						'absolute top-0 left-0 px-2 py-1 rounded-md font-semibold text-xs text-white uppercase tracking-wider'
-					}
-				>
-					{product?.label}
-				</div>
+				{product?.label && (
+					<div className="bg-green-500 absolute top-0 left-0 px-2 py-1 rounded-md font-semibold text-xs text-white uppercase tracking-wider">
+						{product?.label}
+					</div>
+				)}
 				<div className="w-64 h-64 mx-auto sx:w-40 sx:h-40 sm:w-50 sm:h-50">
 					<ProductPicture productImg={product?.img} />
 				</div>

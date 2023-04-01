@@ -5,7 +5,7 @@ const Details: FC<{ title: string; children: ReactNode | string }> = ({
 	children,
 }) => {
 	return (
-		<details className="mt-8 inline-block">
+		<details className="inline-block">
 			<summary className="font-medium select-none cursor-pointer">
 				{title}
 			</summary>

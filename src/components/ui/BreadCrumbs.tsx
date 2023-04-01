@@ -17,7 +17,7 @@ const Breadcrumbs = () => {
 		<div className="breadcrumbs">
 			{breadcrumbs.map(({ match, breadcrumb }) => (
 				<span key={match.pathname} className="flex items-center">
-					<NavLink className="mx-2" to={match.pathname}>
+					<NavLink className="mx-2 line-clamp-1 max-w-md" to={match.pathname}>
 						{breadcrumb}
 					</NavLink>
 					<SvgDivider height={16} opacity={0.4} />

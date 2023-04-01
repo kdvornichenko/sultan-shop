@@ -22,7 +22,7 @@
 
 @layer components {
 	html {
-		@apply overflow-x-hidden;
+		@apply overflow-x-hidden scroll-smooth;
 	}
 
 	// Хлебные крошки
@@ -167,7 +167,7 @@
 		& > div {
 			@apply flex items-center gap-6;
 			& > label {
-				@apply w-full max-w-[150px] max-md:max-w-[120px];
+				@apply w-full max-w-[170px] max-md:max-w-[120px];
 			}
 			& > input,
 			& > textarea {
@@ -179,6 +179,29 @@
 			& input[type='radio'] {
 				@apply mr-1;
 			}
+			& > details {
+				.summary-elem {
+					@apply flex items-center gap-2 text-sm text-primary;
+					& > input[type='text'] {
+						@apply rounded-md border border-slate-700 px-2;
+					}
+				}
+			}
+		}
+	}
+
+	// Пагинация
+	.pagination {
+		@apply mt-4 flex w-full items-center justify-center gap-6 text-sm font-medium text-slate-700 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12;
+		.previous,
+		.next {
+			@apply text-orange-500;
+		}
+		.disabled {
+			@apply text-orange-200;
+		}
+		.active {
+			@apply flex h-9 w-9 items-center justify-center rounded-full bg-orange-200;
 		}
 	}
 

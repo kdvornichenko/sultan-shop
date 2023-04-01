@@ -16,12 +16,12 @@ const Sort = () => {
 		switch (event.target.value) {
 			case '1':
 				sortedProducts = [...products].sort((a, b) =>
-					a.title.localeCompare(b.title)
+					a.title.toLowerCase().localeCompare(b.title)
 				)
 				break
 			case '2':
 				sortedProducts = [...products].sort((a, b) =>
-					b.title.localeCompare(a.title)
+					b.title.toLowerCase().localeCompare(a.title)
 				)
 				break
 			case '3':
@@ -52,8 +52,8 @@ const Sort = () => {
 			>
 				<option value="1">Название ⬇</option>
 				<option value="2">Название ⬆</option>
-				<option value="3">Цена ⬇</option>
-				<option value="4">Цена ⬆</option>
+				<option value="3">Цена ⬆</option>
+				<option value="4">Цена ⬇</option>
 			</select>
 		</div>
 	)

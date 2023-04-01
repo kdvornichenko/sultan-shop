@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ICartProduct, IProduct } from 'models'
+import { ICartProduct, IFilterItem, IProduct } from 'models'
 
 interface IProductsState {
 	data: IProduct[]
@@ -13,6 +13,7 @@ interface IProductsState {
 	filteredByPriceData: IProduct[]
 	filteredByManufacturerData: IProduct[]
 	filteredByTypeData: IProduct[]
+	typeOfCareOptions: IFilterItem[]
 }
 
 const initialState: IProductsState = {
@@ -27,6 +28,7 @@ const initialState: IProductsState = {
 	filteredByPriceData: [],
 	filteredByManufacturerData: [],
 	filteredByTypeData: [],
+	typeOfCareOptions: [],
 }
 
 export const productsSlice = createSlice({
@@ -89,6 +91,9 @@ export const productsSlice = createSlice({
 		setCartProductsAmount: (state, action: PayloadAction<number>) => {
 			state.cartProductsAmount = action.payload
 		},
+		setNewTypeOfCareOptions: (state, action: PayloadAction<IFilterItem[]>) => {
+			state.typeOfCareOptions = action.payload
+		},
 	},
 })
 
@@ -106,4 +111,5 @@ export const {
 	setFilteredByPriceProducts,
 	setFilteredByManufacturerProducts,
 	setFilteredByTypeProducts,
+	setNewTypeOfCareOptions,
 } = productsSlice.actions
