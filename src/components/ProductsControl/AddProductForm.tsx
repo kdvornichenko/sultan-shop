@@ -159,7 +159,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 							...formData,
 							img: {
 								imgUrl: formData.img.isLocal
-									? `/test/img/products/${formData.barcode}`
+									? `/dist/img/products/${formData.barcode}`
 									: formData.img.imgUrl,
 								isLocal: formData.img.isLocal,
 							},
@@ -187,7 +187,7 @@ const AddProductForm: FC<{ product?: IProduct }> = ({ product }) => {
 						...formData,
 						img: {
 							imgUrl: formData.img.isLocal
-								? `/test/img/products/${formData.barcode}`
+								? `/dist/img/products/${formData.barcode}`
 								: formData.img.imgUrl,
 							isLocal: formData.img.isLocal,
 						},
