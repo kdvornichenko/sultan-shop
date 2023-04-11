@@ -5,13 +5,13 @@
 		"name": "Kirill Dvornichenko",
 		"url": "https://github.com/kdvornichenko/"
 	},
-	"homepage": "https://haders.rs/test/",
+	"homepage": "https://test.hader.rs/dist/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build --base=/test/",
+		"build": "tsc && vite build --base=/dist/",
 		"preview": "vite preview"
 	},
 	"dependencies": {
