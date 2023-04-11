@@ -5,13 +5,13 @@
 		"name": "Kirill Dvornichenko",
 		"url": "https://github.com/kdvornichenko/"
 	},
-	"homepage": "https://kdvornichenko.github.io/sultan-shop/",
+	"homepage": "https://haders.rs/test/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build --base=/sultan-shop/",
+		"build": "tsc && vite build --base=/test/",
 		"preview": "vite preview"
 	},
 	"dependencies": {
